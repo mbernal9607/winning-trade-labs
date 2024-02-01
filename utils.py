@@ -17,10 +17,6 @@ def enviar_operaciones(simbolo,tipo_operacion, precio_tp,precio_sl,volumen_op):
     response = mt5.order_send(orden_sl)
     print('[INFO] order sent - {}'.format(response))
     return response
-
-
-
-def _orderPayloadBuilder(self,par:str,volumen: float,tipo_operacion:mt5,nombre_bot:str,sl:float= None,tp:float = None,type_fill= mt5.ORDER_FILLING_FOK) -> None:
         '''
         Función para abrir operaciones en mt5. Esta funciónpuede abrir operaciones sin Stop Loss y sin Take Profit, solo con stop loss, solo con 
         take profit o con ámbos parámetros.

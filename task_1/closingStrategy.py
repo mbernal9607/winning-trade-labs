@@ -2,7 +2,8 @@ from utils import getTimeGMTFormat
 from datetime import datetime
 
 closeTimeByAsset = {
-    'EURUSD': "11:40:00"
+    'EURUSD': "11:40:00",
+    "USDJPY": "09:15:00"
 }
 
 class ClosingStrategy():

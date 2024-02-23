@@ -16,7 +16,7 @@ def main():
         openPositions = order.getOpenPositionsInfo()
         for position in openPositions:
             closeStrategy = ClosingStrategy(position['symbol'])
-            if not closeStrategy.close: continue
+            continue
             closed = order.closePosition(position['symbol'], position["ticket"])
             message = "Ups !, Can't close the position {}".format(position["ticket"]) if not closed else f'Great !, The position with number {position["ticket"]} has been closed.'
             print(message)

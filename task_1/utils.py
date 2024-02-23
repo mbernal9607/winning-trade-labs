@@ -23,5 +23,5 @@ def enviar_operaciones(simbolo,tipo_operacion, precio_tp,precio_sl,volumen_op):
     return response
 
 def getTimeGMTFormat():
-    tiempoGTM = datetime.now(pytz.timezone('GMT'))
+    tiempoGTM = datetime.now(pytz.timezone('GMT2')) # formato de tiempo erroneo, debemos usar el GMT 2 ...
     return tiempoGTM.strftime('%H:%M:%S')

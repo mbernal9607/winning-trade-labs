@@ -7,6 +7,7 @@ import pandas_ta as ta
 import traceback
 from logger import Logger
 
+
 class Indicators():
     divisa=''
     export_file = False

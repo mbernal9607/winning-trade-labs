@@ -58,6 +58,8 @@ def obtenerPreciosCierre(divisa, count):
     return df
 
 def fechasUltimasNSemanas(n):
+
+
     # Obtener la fecha actual
     fecha_actual = datetime.now().date()
 

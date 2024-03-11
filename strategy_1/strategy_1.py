@@ -7,7 +7,6 @@ from sklearn.linear_model import LinearRegression
 from scipy import stats
 #import statsmodels.api as sm
 import pytz
-import time
 
 # Inicializar conexión con MT5
 def iniciar_mt5(nombre_cuenta, clave, servidor, path):

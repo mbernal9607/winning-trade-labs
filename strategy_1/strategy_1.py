@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from scipy import stats
-#import statsmodels.api as sm
 import pytz
 #import time
 

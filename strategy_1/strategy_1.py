@@ -46,15 +46,15 @@ def detectar_outliers_volatilidad(datos):
 
 
 
-print("1. obteniendo los datos") 
+print("1. Obteniendo los datos") 
 
 data= obtener_datos('EURUSD',99999)
 
-print("2. calculando indicadores")
+print("2. Calculando indicadores")
 
 atr_1 = calcular_indicadores(data)
 
-print('3. detectando outliers vol')
+print('3. Detectando outliers vol')
 
 outli_detec = detectar_outliers_volatilidad(atr_1)
 

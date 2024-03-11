@@ -46,6 +46,7 @@ def detectar_outliers_volatilidad(datos):
 
 
 
+print("1. Obteniendo los datos") 
 
 data= obtener_datos('EURUSD',99999)
 

@@ -59,7 +59,7 @@ print('3. Detectando outliers vol')
 outli_detec = detectar_outliers_volatilidad(atr_1)
 
 print(outli_detec)
-outli_detec.to_csv('outlier_detect.csv')
+
 
 
 

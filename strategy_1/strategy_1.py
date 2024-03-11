@@ -6,34 +6,61 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from scipy import stats
 import pytz
+#import time
 
 # Inicializar conexión con MT5
-def iniciar_mt5(nombre_cuenta, clave, servidor, path):
-    if not mt5.initialize(login=nombre_cuenta, password=clave, server=servidor, path=path):
-        print("Initialize() failed, error code =", mt5.last_error())
-        quit()
+nombre_cuenta = 67093873
+clave = 'Clave01*'
+servidor = 'RoboForex-ECN'
+path = r'C:\Program Files\MetaTrader 5\terminal64.exe'
+
+if not mt5.initialize(login=nombre_cuenta, password=clave, server=servidor, path=path):
+    print("Initialize() failed, error code =", mt5.last_error())
+    quit()
+
 
 # Obtener datos históricos
-def obtener_datos(simbolo, num_velas):
-    utc_now = datetime.utcnow()
-    utc_from = utc_now - timedelta(days=6*30)  # Últimos 6 meses
-    rates = mt5.copy_rates_range(simbolo, mt5.TIMEFRAME_M1, utc_from, utc_now)
+def obtener_datos(simbolo,num_velas):
+    rates = mt5.copy_rates_from_pos(simbolo, mt5.TIMEFRAME_M1, 0, num_velas)
     datos = pd.DataFrame(rates)
     datos['time'] = pd.to_datetime(datos['time'], unit='s')
     return datos
 
-
 # Función calcular_indicadores para incluir ATR_X
 def calcular_indicadores(datos):
     datos['ATR'] = ta.atr(datos['high'], datos['low'], datos['close'])
-    datos[['BOLU', 'BOLD', 'BOLM']] = ta.bbands(datos['close'])
+    bbands_result = ta.bbands(datos['close'])
+    # Asignar solo las columnas de interés a tu DataFrame 'datos'
+    datos['BOLU'] = bbands_result['BBU_5_2.0']  # Banda superior de Bollinger
+    datos['BOLD'] = bbands_result['BBL_5_2.0']  # Banda inferior de Bollinger
+    datos['BOLM'] = bbands_result['BBM_5_2.0']  # Banda media de Bollinger
     return datos
 
 def detectar_outliers_volatilidad(datos):
     # Calculamos el umbral de volatilidad alta como el 20% superior de los valores de ATR
-    datos['ATR_X'] = datos['ATR'].rolling(window=5*30*24*60).quantile(0.20)
-    datos['ATR_outlier'] = datos['ATR'] > datos['ATR_X']
+    datos['ATR_X'] = datos['ATR'].rolling(window=5*30*24).quantile(0.80)
+    datos['ATR_outlier'] = datos['ATR'] < datos['ATR_X']
     return datos
+
+
+
+
+print("1. obteniendo los datos") 
+
+data= obtener_datos('EURUSD',99999)
+
+print("2. calculando indicadores")
+
+atr_1 = calcular_indicadores(data)
+
+print('3. detectando outliers vol')
+
+outli_detec = detectar_outliers_volatilidad(atr_1)
+
+print(outli_detec)
+outli_detec.to_csv('outlier_detect.csv')
+
+
 
 # Definir función para calcular regresión lineal
 def calcular_pendiente_y_p_valor(datos):

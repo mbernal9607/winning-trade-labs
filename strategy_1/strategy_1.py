@@ -6,6 +6,8 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from scipy import stats
 import pytz
+# Utils
+from utils import regresion
 #import time
 
 # Inicializar conexión con MT5
@@ -57,10 +59,15 @@ print('3. detectando outliers vol')
 
 outli_detec = detectar_outliers_volatilidad(atr_1)
 
-print(outli_detec)
-outli_detec.to_csv('outlier_detect.csv')
+#print(outli_detec)
+#outli_detec.to_csv('outlier_detect.csv')
 
-
+print('4. Calculando regresion lineal')
+cantidad = 25
+max_p_value = 0.05
+prices = np.array(data.close[len(data.close) - cantidad]).reshape(-1, 1)
+reg_lineal = regresion(prices, cantidad, max_p_value)
+print("reg_lineal ..." , reg_lineal)
 
 # Definir función para calcular regresión lineal
 def calcular_pendiente_y_p_valor(datos):
